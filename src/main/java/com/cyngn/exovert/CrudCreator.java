@@ -139,7 +139,7 @@ public class CrudCreator {
         OptionParser parser = new OptionParser();
         create = parser.acceptsAll(asList("create", "c"), "create the files on disk");
         preview = parser.acceptsAll(asList("preview", "p"), "output all the java files to the console, don't create files");
-        name = parser.acceptsAll(asList("name", "n"), "the optional project name")
+        name = parser.acceptsAll(asList("name"), "the optional project name")
                 .requiredIf(gradle)
                 .withRequiredArg()
                 .ofType(String.class);

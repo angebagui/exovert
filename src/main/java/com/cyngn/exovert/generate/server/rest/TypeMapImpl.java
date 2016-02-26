@@ -1,11 +1,9 @@
 package com.cyngn.exovert.generate.server.rest;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
-import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
@@ -39,6 +37,7 @@ class TypeMapImpl implements TypeMap {
         typeToClassMapping.put("Character", ClassName.get("java.lang", "Character"));
         typeToClassMapping.put("Float", ClassName.get("java.lang", "Float"));
         typeToClassMapping.put("Double", ClassName.get("java.lang", "Double"));
+        typeToClassMapping.put("UUID", ClassName.get("java.util", "UUID"));
 
         typeToClassMapping.put("Date", ClassName.get("org.joda.time", "DateTime"));
         typeToClassMapping.put("String", ClassName.get("java.lang", "String"));
@@ -86,6 +85,10 @@ class TypeMapImpl implements TypeMap {
         // for String
         typeConverterMapping.put("String", cb ->
                 CodeBlock.builder().add("$L", cb).build());
+
+        // for UUID
+        typeConverterMapping.put("UUID", cb ->
+                CodeBlock.builder().add("$T.fromString($L", typeToClassMapping.get("UUID"), cb).add(")").build());
 
         //Conversion for map and list will be tricky, unless we define our own serialization and use it across the board.
     }
