@@ -58,7 +58,7 @@ public class MethodGenerator {
      *             });
      *         }
      *     } catch (Exception ex)  {
-     *         logger.debug("Bad request, ex:" + ex);
+     *         logger.error("Bad request. ", ex);
      *         HttpHelper.processResponse(request.response(), HttpResponseStatus.BAD_REQUEST.code());
      *     }
      * }
@@ -82,7 +82,7 @@ public class MethodGenerator {
             methodSpecBuilder.beginControlFlow("try")
                 .addStatement("process(context)")
                 .nextControlFlow("catch (Exception ex) ")
-                .addStatement("logger.debug(\"Bad request, ex:\" + ex)")
+                .addStatement("logger.error(\"Bad request.\", ex)")
                 .addStatement("$T.processResponse(context.response(), $T.BAD_REQUEST.code())", HttpHelper.class, HttpResponseStatus.class)
                 .endControlFlow();
         } else {
@@ -108,7 +108,7 @@ public class MethodGenerator {
                 .addCode("});\n")
                 .endControlFlow()
                 .nextControlFlow("catch (Exception ex) ")
-                .addStatement("logger.debug(\"Bad request, ex:\" + ex)")
+                .addStatement("logger.error(\"Bad request.\", ex)")
                 .addStatement("$T.processResponse(request.response(), $T.BAD_REQUEST.code())", HttpHelper.class, HttpResponseStatus.class)
                 .endControlFlow();
         }
@@ -131,7 +131,7 @@ public class MethodGenerator {
      *         }
      *         validate(context, getRequest);
      *     } catch (Exception ex)  {
-     *         logger.debug("Bad request, ex:" + ex);
+     *         logger.error("Bad request. ", ex);
      *         HttpHelper.processResponse(request.response(), HttpResponseStatus.BAD_REQUEST.code());
      *     }
      * }
@@ -154,7 +154,7 @@ public class MethodGenerator {
             methodSpecBuilder.beginControlFlow("try")
                     .addStatement("process(context)")
                     .nextControlFlow("catch (Exception ex) ")
-                    .addStatement("logger.debug(\"Bad request, ex:\" + ex)")
+                    .addStatement("logger.error(\"Bad request.\", ex)")
                     .addStatement("$T.processResponse(context.response(), $T.BAD_REQUEST.code())", HttpHelper.class, HttpResponseStatus.class)
                     .endControlFlow();
         } else {
@@ -163,7 +163,7 @@ public class MethodGenerator {
                 .addCode(getRequestCodeBlock(api, namespace))
                 .addStatement("validate(context, $L)", RestGeneratorHelper.getRequestVariableName(api.name))
                 .nextControlFlow("catch (Exception ex) ")
-                .addStatement("logger.debug(\"Bad request, ex:\" + ex)")
+                .addStatement("logger.error(\"Bad request.\", ex)")
                 .addStatement("$T.processResponse(request.response(), $T.BAD_REQUEST.code())", HttpHelper.class, HttpResponseStatus.class)
                 .endControlFlow();
         }
